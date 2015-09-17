@@ -10,8 +10,8 @@ ENV['TMPDIR'] ||= File.expand_path('../../tmp', __FILE__)
 Bundler.require(:default, ENV['RACK_ENV']) if defined?(Bundler)
 
 # Load initializers
-Dir["#{File.dirname(__FILE__)}/initializers/*.rb"].sort.each do |path|
-  require File.expand_path("../initializers/#{File.basename(path, '.rb')}", __FILE__)
-end
+#Dir["#{File.dirname(__FILE__)}/initializers/*.rb"].sort.each do |path|
+#  require File.expand_path("../initializers/#{File.basename(path, '.rb')}", __FILE__)
+#end
 
 require "seo"

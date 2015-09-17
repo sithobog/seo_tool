@@ -1,0 +1,7 @@
+.links.well .col-xs-7{
+  overflow-x: auto;
+}
+
+.links.well .row:nth-child(even){
+  background-color: #dff0d8;
+}

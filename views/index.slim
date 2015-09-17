@@ -1,1 +1,6 @@
-h1 Slim is working!
+.row
+  .col-xs-4.col-xs-offset-4.well
+    h1 Put url here
+    form name="url_form" action="/reports/" method="POST"
+      input {type="text" name="site_url" autofocus}
+      input type="submit" value="GO!" class="btn btn-primary"

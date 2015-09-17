@@ -1,9 +1,11 @@
 source 'http://rubygems.org'
 
 gem "rack"
-gem "sinatra"
 gem "puma"
+gem "sinatra"
 gem "slim"
+gem "httparty"
+gem "nokogiri"
 
 group :test do
   gem "rspec"

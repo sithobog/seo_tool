@@ -1,0 +1,34 @@
+.row
+  .col-xs-12
+    h1
+      | Report for
+      a href="#{@site_url}"  #{@site_url}
+    .headers.well
+      h2 Response headers
+      table
+        thead
+          tr
+            th Key
+            th Value
+        tbody
+          - @headers.each do |k,v|
+            tr
+              td = k
+              td = v
+    .links.well
+      h2 Links
+      .row
+        .col-xs-3 
+          strong name
+        .col-xs-7
+          strong url
+        .col-xs-1
+          strong rel
+        .col-xs-1
+          strong Target
+      - @links.each do |link|
+        .row
+          .col-xs-3 = link.text
+          .col-xs-7 = link["href"]
+          .col-xs-1 = link["rel"]
+          .col-xs-1 = link["target"]
