@@ -5,3 +5,11 @@
 .links.well .row:nth-child(even){
   background-color: #dff0d8;
 }
+
+td{
+  overflow-x: auto;
+}
+
+a{
+  display: block;
+}
