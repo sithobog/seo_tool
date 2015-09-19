@@ -4,3 +4,22 @@
     form name="url_form" action="/reports/" method="POST"
       input {type="text" name="site_url" autofocus}
       input type="submit" value="GO!" class="btn btn-primary"
+.row
+  .col-xs-8.col-xs-offset-2.well
+    h1 Reports
+    .row
+      .col-xs-4
+        strong Site url
+      .col-xs-4
+        strong Created at
+      .col-xs-4
+        strong Action
+      - unless @report_list.nil?
+        - @report_list.each do |report|
+          .row
+            .col-xs-4
+              = report[:url]
+            .col-xs-4
+              = report[:time]
+            .col-xs-4
+              a href="../reports/#{report[:path]}" View

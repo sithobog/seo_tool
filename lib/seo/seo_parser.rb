@@ -10,52 +10,38 @@ module Seo
 
     def initialize(site_url)
       @site_url = site_url
-      @links = find_links(@site_url)
-      @headers = grab_url(@site_url).headers.to_h
+      @links = find_links(site_url)
+      @headers = grab_url(site_url).headers.to_h
     end
 
-    def grab_url(site_url)
-      response = HTTParty.get(site_url)
+    def grab_url(url)
+      response = HTTParty.get(url)
     end
 
-    def find_links(site_url)
+    def find_links(url)
       links = []
-      doc = Nokogiri::HTML(open(site_url))
+      doc = Nokogiri::HTML(open(url))
       doc.search('a').each do |link|
         links << link
       end
       links
     end
 
-    def prepare_site_url(site_url)
-        site_url.chop! if site_url[-1] == "/"
-        site_url.gsub!('/', '_') if site_url.include?("/")
-      if site_url.include?("https")
-        site_url = site_url[8..site_url.length-1]
+    def prepare_site_url(url)
+        url.chop! if url[-1] == "/"
+        url.gsub!('/', '_') if url.include?("/")
+      if url.include?("https")
+        url = url[8..url.length-1]
       else
-        site_url = site_url[7..site_url.length-1]
+        url = url[7..url.length-1]
       end
     end
 
-    def create_file(site_url, headers, links)
+    def create_file(url)
       _body = Slim::Template.new(File.expand_path('report.slim', "views/"), {}).render(self)
-      _ready_url = prepare_site_url(site_url)
-      _time = time_format
-      File.write(File.expand_path("#{_ready_url}_#{_time}.html", "public/reports"),_body)
-      add_link_to_index(_ready_url, _time)
-    end
-
-    def add_link_to_index(url,time)
-      open('views/index.slim', 'a') do |f|
-        f << "\r a href='../reports/#{url}_#{time}.html' #{url}\n"
-      end
-    end
-
-    def time_format
-      _time = Time.now.to_s
-      _time = _time.gsub(" ","_")
-      _time = _time.gsub(":", "-")
-      _time = _time[0..-7]
+      _ready_url = prepare_site_url(url)
+      _time = Time.now.to_i
+      File.write(File.expand_path("#{_ready_url}-#{_time}.html", "public/reports"),_body)
     end
 
   end
