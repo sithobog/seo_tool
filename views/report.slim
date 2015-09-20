@@ -8,8 +8,11 @@ html
     .container
       .row
         .col-xs-12
-          h1
-            | Report for
+          h3 class="ip" IP adress is #{@ip}
+      .row
+        .col-xs-12
+          h1 class="url_link"
+            | Report for 
             a href="#{@site_url}"  #{@site_url}
           .headers.well
             h2 Response headers

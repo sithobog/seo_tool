@@ -7,19 +7,19 @@
 .row
   .col-xs-8.col-xs-offset-2.well
     h1 Reports
-    .row
+    .row class="table_title"
       .col-xs-4
         strong Site url
       .col-xs-4
         strong Created at
       .col-xs-4
         strong Action
-      - unless @report_list.nil?
-        - @report_list.each do |report|
-          .row
-            .col-xs-4
-              = report[:url]
-            .col-xs-4
-              = report[:time]
-            .col-xs-4
-              a href="../reports/#{report[:path]}" View
+    - unless @report_list.nil?
+      - @report_list.each do |report|
+        .row class="report_values"
+          .col-xs-4
+            = report[:url]
+          .col-xs-4
+            = report[:time]
+          .col-xs-4
+            a href="../reports/#{report[:path]}" View

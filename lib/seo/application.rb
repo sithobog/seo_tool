@@ -21,10 +21,19 @@ module Seo
     post '/reports/' do
       site_url = params[:site_url]
       parser = SeoParser.new(site_url)
-
       parser.create_file(parser.site_url)
-
       redirect "/"
     end
+
+    not_found do
+      status 404
+      slim :not_found
+    end
+
+
+    error do
+      slim :error
+    end
+    
   end
 end
