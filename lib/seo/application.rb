@@ -1,9 +1,10 @@
-require 'sinatra'
+require 'sinatra/base'
 require 'seo/seo_parser'
 require 'seo/report_list'
+require_relative '../seo.rb'
 
 module Seo
-  class Application < ::Sinatra::Application
+  class Application < Sinatra::Base
     # Configuration
     set :public_folder, -> { Seo.root_path.join('public').to_s }
     set :views, -> { Seo.root_path.join('views').to_s }
@@ -25,6 +26,5 @@ module Seo
 
       redirect "/"
     end
-
   end
 end
