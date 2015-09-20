@@ -2,13 +2,65 @@
   overflow-x: auto;
 }
 
-.links.well .row:nth-child(even){
+.links.well .row:nth-child(odd){
   background-color: #dff0d8;
 }
 
-td{
-  overflow-x: auto;
+.links.well .row .col-xs-7, .links.well .col-xs-3, .links.well .col-xs-1{
+	border: 1px solid black;
+	min-height: 22px;
 }
+
+h1, h2{
+	text-align: center;
+}
+
+h2{
+	font-weight: bold;
+}
+
+.headers .col-xs-4:hover, .headers .col-xs-8:hover, .reports_index .col-xs-4:hover,
+.links.well .row .col-xs-7:hover, .links.well .col-xs-3:hover, .links.well .col-xs-1:hover{
+	border: 1px solid #adff2f;
+	background-color: #20b2aa;
+}
+
+input[type="text"]{
+	width: 80%;
+}
+
+.headers .col-xs-4, .headers .col-xs-8{
+	border: 1px solid black;
+	overflow-x: auto;
+}
+
+.headers .row:nth-child(odd){
+	background-color: #dff0d8;
+}
+
+.reports_index .col-xs-4{
+	border: 1px solid black;
+}
+
+.border{
+	padding: 7px;
+	border: 2px solid green;
+	border-radius: 10px;
+	background-color: #aaa;
+}
+
+.col-xs-4.col-xs-offset-4.well{
+	text-align: center;
+}
+
+.url_link a{
+	display: inline-block;
+}
+
+.btn.btn-primary{
+	margin-left: 10px;
+}
+
 
 a{
   display: block;

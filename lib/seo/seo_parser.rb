@@ -13,8 +13,8 @@ module Seo
       @site_url = site_url
       @links = find_links(site_url)
       @headers = grab_url(site_url).headers.to_h
-      #@ip = grab_ip(site_url)
       @ip = nil
+      @initialize_time = nil
     end
 
     def grab_url(url)
@@ -45,9 +45,10 @@ module Seo
 
     def create_file(url)
       grab_ip(url) if @ip.nil?
+      _time = Time.now.to_i
+      @initialize_time = Time.at(_time).strftime("%e %B %Y %k:%M")
       _body = Slim::Template.new(File.expand_path('report.slim', "views/"), {}).render(self)
       _ready_url = prepare_site_url(url)
-      _time = Time.now.to_i
       File.write(File.expand_path("#{_ready_url}-#{_time}.html", "public/reports"),_body)
     end
 

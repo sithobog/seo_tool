@@ -2,19 +2,20 @@
   .col-xs-4.col-xs-offset-4.well
     h1 Put url here
     form name="url_form" action="/reports/" method="POST"
-      input {type="text" name="site_url" autofocus}
+      input {type="text" name="site_url" autofocus required placeholder="http://example.org or https://example.org"
+            pattern="^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$" }
       input type="submit" value="GO!" class="btn btn-primary"
-.row
-  .col-xs-8.col-xs-offset-2.well
-    h1 Reports
-    .row class="table_title"
-      .col-xs-4
-        strong Site url
-      .col-xs-4
-        strong Created at
-      .col-xs-4
-        strong Action
-    - unless @report_list.nil?
+- unless @report_list.nil?
+  .row
+    .col-xs-8.col-xs-offset-2.well.reports_index
+      h1 Reports
+      .row class="table_title"
+        .col-xs-4
+          strong Site url
+        .col-xs-4
+          strong Created at
+        .col-xs-4
+          strong Action
       - @report_list.each do |report|
         .row class="report_values"
           .col-xs-4

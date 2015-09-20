@@ -13,8 +13,7 @@ require_relative "../lib/seo/application.rb"
 
 RSpec.configure do |config|
   include Rack::Test::Methods
-  #include Capybara::DSL
-
+  
   def app
     Seo::Application.new
   end
