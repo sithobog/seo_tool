@@ -1,8 +1,8 @@
-require_relative '../lib/seo/report_list'
+require_relative '../lib/seo/storage/file_storage'
 
-RSpec.describe Seo::ReportList do
+RSpec.describe Seo::FileStorage do
   it "grabs file" do
-    report_list = Seo::ReportList.new('./spec/tmp/').grab_files
+    report_list = Seo::FileStorage.new.all_reports('./spec/tmp/')
     report_list.each do |report|
       expect(report[:url].to_s).to eq("test-for-file.com")
       expect(report[:time].to_s).to eq("11 February 2220 13:53")

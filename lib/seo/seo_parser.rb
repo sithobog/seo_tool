@@ -7,7 +7,7 @@ module Seo
   class SeoParser
 
     attr_reader :site_url, :links, :headers
-    attr_accessor :ip
+    attr_accessor :ip, :initialize_time
 
     def initialize(site_url)
       @site_url = site_url
@@ -42,15 +42,6 @@ module Seo
         url = url[7..url.length-1]
       end
     end
-
-    def create_file(url)
-      grab_ip(url) if @ip.nil?
-      _time = Time.now.to_i
-      @initialize_time = Time.at(_time).strftime("%e %B %Y %k:%M")
-      _body = Slim::Template.new(File.expand_path('report.slim', "views/"), {}).render(self)
-      _ready_url = prepare_site_url(url)
-      File.write(File.expand_path("#{_ready_url}-#{_time}.html", "public/reports"),_body)
-    end
-
+    
   end
 end
