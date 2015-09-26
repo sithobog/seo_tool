@@ -6,6 +6,7 @@ gem "sinatra"
 gem "slim"
 gem "httparty"
 gem "nokogiri"
+gem "pg"
 
 group :test do
   gem "rspec"
