@@ -67,24 +67,30 @@ module Seo
 		end
 
     def add_links(report,report_id)
+      query = ''
+      #prepare string for insert 
       report.links.each do |link|
-        client.exec("INSERT INTO links(name,href,target,report_id) VALUES(
-          '#{escape_apostrophe(link.text)}',
+        query +="('#{escape_apostrophe(link.text)}',
           '#{escape_apostrophe(link['href'])}',
           '#{escape_apostrophe(link['target'])}',
-          '#{(report_id)}'
-        );")
+          '#{(report_id)}'),"
       end
+      #remove comma in the end
+      query.chop!
+      client.exec("INSERT INTO links(name,href,target,report_id) VALUES #{query};")
     end
 
     def add_headers(report,report_id)
+      query = ''
+      #prepare string for insert 
       report.headers.each do |k,v|
-        client.exec("INSERT INTO headers(name,value,report_id) VALUES(
-          '#{escape_apostrophe(k)}',
+        query += "('#{escape_apostrophe(k)}',
           '#{escape_apostrophe(v)}',
-          '#{(report_id)}'
-          );")
+          '#{(report_id)}'),"
       end
+      #remove comma in the end
+      query.chop!
+      client.exec("INSERT INTO headers(name,value,report_id) VALUES #{query};")
     end
 
     def last_record(column='id',table='reports')
