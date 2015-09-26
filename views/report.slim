@@ -3,17 +3,17 @@ html
   head
     link rel="stylesheet" href="../main.css"
     link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
-    title #{@site_url} report
+    title #{@report[0][:url]} report
   body
     .container
       .row
         h1 class="url_link"
           | Report for 
-          a href="#{@site_url}"  #{@site_url}
+          a href="http://#{@report[0][:url]}"  #{@report[0][:url]}
         .col-xs-6
-          h3 class="border" IP adress is #{@ip}
+          h3 class="border" IP adress is #{@report[0][:ip]}
         .col-xs-6
-          h3 class="border" Created at #{@initialize_time}
+          h3 class="border" Created at #{@report[0][:time]}
       .row
         .col-xs-12
           .headers.well
@@ -23,10 +23,10 @@ html
                 strong Key
               .col-xs-8
                 strong Value
-            - @headers.each do|k, v|
+            - @headers.each do|k|
               .row
-                .col-xs-4 = k
-                .col-xs-8 = v
+                .col-xs-4 = k[:name]
+                .col-xs-8 = k[:value]
           .links.well
             h2 Links
             .row
@@ -40,7 +40,7 @@ html
                 strong Target
             - @links.each do |link|
               .row
-                .col-xs-3 = link.text
-                .col-xs-7 = link["href"]
-                .col-xs-1 = link["rel"]
-                .col-xs-1 = link["target"]
+                .col-xs-3 = link[:name]
+                .col-xs-7 = link[:href]
+                .col-xs-1 = link[:rel]
+                .col-xs-1 = link[:target]

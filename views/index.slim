@@ -23,4 +23,6 @@
           .col-xs-4
             = report[:time]
           .col-xs-4
-            a href="/report/#{report[:guid]}" New View
+            a href="/report/#{report[:guid]}" View
+  .row
+    a href="/drop_tables" class="btn btn-danger" Delete tables

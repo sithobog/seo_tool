@@ -37,7 +37,16 @@ module Seo
     end
 
     get '/report/:guid' do
-      FileStorage.new.find_report(params['guid'])
+      array_of_array = DatabaseStorage.new.find_report(params['guid'])
+      @report = array_of_array[0]
+      @links = array_of_array[1]
+      @headers = array_of_array[2]
+      slim :report
+    end
+
+    get '/drop_tables' do
+      DatabaseStorage.new.drop_tables
+      redirect "/"
     end
 
     not_found do

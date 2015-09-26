@@ -18,13 +18,14 @@ module Seo
         id SERIAL PRIMARY KEY,
         url TEXT,
         created_at TIMESTAMP,
-        remote_ip TEXT);")
+        remote_ip INET);")
       #create links table
       client.exec("CREATE TABLE IF NOT EXISTS links(
         id SERIAL PRIMARY KEY,
         name TEXT,
         href TEXT,
         target VARCHAR(15),
+        rel VARCHAR(15),
         report_id INTEGER REFERENCES reports);")
       #create headers table
       client.exec("CREATE TABLE IF NOT EXISTS headers(
@@ -73,11 +74,12 @@ module Seo
         query +="('#{escape_apostrophe(link.text)}',
           '#{escape_apostrophe(link['href'])}',
           '#{escape_apostrophe(link['target'])}',
+          '#{escape_apostrophe(link['rel'])}',
           '#{(report_id)}'),"
       end
       #remove comma in the end
       query.chop!
-      client.exec("INSERT INTO links(name,href,target,report_id) VALUES #{query};")
+      client.exec("INSERT INTO links(name,href,target,rel,report_id) VALUES #{query};")
     end
 
     def add_headers(report,report_id)
@@ -109,8 +111,42 @@ module Seo
       end
     end
 
-		def find_report(guid)
+    def drop_tables
+      client.exec("DROP TABLE reports,links,headers;")
+    end
 
+		def find_report(guid)
+      #grab report
+      report = []
+      client.exec("SELECT * from reports where id=#{guid}") do |result|
+        result.each do |row|
+          report << { url: row['url'],
+                        time: row['created_at'],
+                        ip: row['remote_ip']
+                      }
+        end
+      end
+      #grab links
+      links = []
+      client.exec("SELECT * from links where report_id=#{guid}") do |result|
+        result.each do |row|
+          links << { name: row['name'],
+                        href: row['href'],
+                        target: row['target'],
+                        rel: row['rel']
+                      }
+        end
+      end
+      #grab headers
+      headers= []
+      client.exec("SELECT * from headers where report_id=#{guid}") do |result|
+        result.each do |row|
+          headers << { name: row['name'],
+                        value: row['value']
+                      }
+        end
+      end
+      return a = [report, links, headers]
 		end
 
 	end
