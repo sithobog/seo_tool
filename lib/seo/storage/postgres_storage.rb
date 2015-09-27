@@ -1,11 +1,13 @@
 require_relative 'abstract_storage'
+require_relative '../configuration.rb'
 require 'pg'
 
 module Seo
-	class DatabaseStorage < AbstractStorage
+	class PostgresStorage# < AbstractStorage
 
     def initialize
-      check_database('seo_test')
+      @db_name = Seo.configuration.db_name
+      check_database(@db_name)
       #conn = PG.connect(host: 'localhost', port: '5432',dbname: 'seo_test12345', user: 'tester', password: 'test_password')
       create_tables
     end
@@ -35,7 +37,7 @@ module Seo
 
     def client
       #conn = PG::Connection.open(:dbname => 'test')
-      @client ||= PG::Connection.open(:dbname => 'seo_test')
+      @client ||= PG::Connection.open(:dbname => @db_name)
     end
 
 		def all_reports()
@@ -118,6 +120,7 @@ module Seo
 
     def drop_tables
       client.exec("DROP TABLE reports,links,headers;")
+      create_tables
     end
 
 		def find_report(guid)

@@ -1,7 +1,6 @@
 require 'sinatra/base'
 require 'seo/seo_parser'
-require 'seo/storage/file_storage'
-require 'seo/storage/database_storage'
+require 'seo/storage/storage'
 require_relative '../seo.rb'
 
 module Seo
@@ -21,23 +20,20 @@ module Seo
     use Rack::Reloader
 
     get '/' do
-      @report_list = DatabaseStorage.new.all_reports
-      #@report_list = FileStorage.new.all_reports
-      #storage = DatabaseStorage.new
+      @report_list = Storage.all_reports
       slim :index
     end
 
     post '/reports/' do
       site_url = params[:site_url]
       report = SeoParser.new(site_url)
-      #FileStorage.new.add_report(report)
-      DatabaseStorage.new.add_report(report)
+      Storage.add_report(report)
 
       redirect "/"
     end
 
     get '/report/:guid' do
-      array_of_array = DatabaseStorage.new.find_report(params['guid'])
+      array_of_array = Storage.find_report(params['guid'])
       @report = array_of_array[0]
       @links = array_of_array[1]
       @headers = array_of_array[2]
@@ -45,7 +41,7 @@ module Seo
     end
 
     get '/drop_tables' do
-      DatabaseStorage.new.drop_tables
+      Storage.drop_tables
       redirect "/"
     end
 

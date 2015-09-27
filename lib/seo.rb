@@ -1,5 +1,6 @@
 require 'pathname'
 require 'seo/application'
+require 'seo/configuration'
 
 module Seo
   # Load configuration

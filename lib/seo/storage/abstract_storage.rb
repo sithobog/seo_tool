@@ -1,6 +1,6 @@
 module Seo
 	class AbstractStorage
-
+		
 		def find_report(value)
 		end
 

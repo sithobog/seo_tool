@@ -15,3 +15,4 @@ Bundler.require(:default, ENV['RACK_ENV']) if defined?(Bundler)
 #end
 
 require "seo"
+configure(:development) {require_relative 'app'}
