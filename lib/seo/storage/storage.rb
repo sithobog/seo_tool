@@ -1,5 +1,6 @@
 require_relative 'file_storage'
 require_relative 'postgres_storage'
+require_relative 'sequel_storage'
 
 module Seo
 	class Storage

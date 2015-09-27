@@ -7,6 +7,7 @@ gem "slim"
 gem "httparty"
 gem "nokogiri"
 gem "pg"
+gem "sequel"
 
 group :test do
   gem "rspec"

@@ -11,9 +11,9 @@ html
           | Report for 
           a href="http://#{@report[0][:url]}"  #{@report[0][:url]}
         .col-xs-6
-          h3 class="border" IP adress is #{@report[0][:ip]}
+          h3 class="border" IP adress is #{@report[0][:remote_ip]}
         .col-xs-6
-          h3 class="border" Created at #{@report[0][:time]}
+          h3 class="border" Created at #{@report[0][:created_at]}
       .row
         .col-xs-12
           .headers.well

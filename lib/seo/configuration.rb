@@ -24,6 +24,9 @@ module Seo
       when 'postgres'
         Seo::Storage.storage_type = Seo::PostgresStorage.new
         @database_type = 'postgres'
+      when 'sequel'
+        Seo::Storage.storage_type = Seo::SequelStorage.new
+        @database_type = "sequel"
       else
         Seo::Storage.storage_type = Seo::FileStorage.new
         @database_type = 'files'
