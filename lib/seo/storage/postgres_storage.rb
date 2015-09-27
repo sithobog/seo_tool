@@ -3,7 +3,7 @@ require_relative '../configuration.rb'
 require 'pg'
 
 module Seo
-	class PostgresStorage# < AbstractStorage
+	class PostgresStorage < AbstractStorage
 
     def initialize
       @db_name = Seo.configuration.db_name
@@ -45,8 +45,8 @@ module Seo
       client.exec("SELECT * from reports") do |result|
         result.each do |row|
           report_list << { url: row['url'],
-                        time: row['created_at'],
-                        guid: row['id']
+                        created_at: row['created_at'],
+                        id: row['id']
                       }
         end
       end
@@ -129,8 +129,8 @@ module Seo
       client.exec("SELECT * from reports where id=#{guid}") do |result|
         result.each do |row|
           report << { url: row['url'],
-                        time: row['created_at'],
-                        ip: row['remote_ip']
+                        created_at: row['created_at'],
+                        remote_ip: row['remote_ip']
                       }
         end
       end
