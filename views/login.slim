@@ -1,0 +1,7 @@
+.container
+	.row
+		.col-xs-6.col-xs-offset-3.login_form
+			form name="user_form" action="/auth/login" method="POST"
+			  input {type="text" name="username" autofocus required placeholder="username"}
+			  input {type="password" name="password" required placeholder="password"}
+			  input type="submit" value="Login" class="big_button btn btn-lg btn-primary"

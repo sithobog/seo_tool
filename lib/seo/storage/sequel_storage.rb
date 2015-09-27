@@ -5,10 +5,10 @@ module Seo
 	class SequelStorage
 
 		DB = Sequel.connect(:adapter => 'postgres', :host => 'localhost',
-												:database => 'sequel_test', :user => 'tester', :password => 'test_password')
+												:database => 'warden_test', :user => 'tester', :password => 'test_password')
 
 		def initialize
-			check_database('sequel_test')
+			check_database('warden_test')
 			create_tables?
 		end
 		
@@ -85,7 +85,6 @@ module Seo
 			  primary_key :id
 			  String :name
 			  String :value
-			  Float :price
 			  foreign_key :report_id, :reports
 			end
 

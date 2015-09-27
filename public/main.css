@@ -25,7 +25,23 @@ h2{
 	background-color: #20b2aa;
 }
 
-input[type="text"]{
+.big_button{
+	display: block;
+	width: 75%;
+}
+
+.login_form{
+	margin-top: 200px;
+}
+
+.login_form input{
+	margin-top: 10px;
+	padding: 7px;
+	border-radius: 10px;
+	outline: none;
+}
+
+input[type="text"],input[type="password"]{
 	width: 80%;
 }
 

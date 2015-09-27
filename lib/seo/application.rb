@@ -1,10 +1,18 @@
 require 'sinatra/base'
+require 'sinatra/flash'
 require 'seo/seo_parser'
 require 'seo/storage/storage'
+require 'seo/user'
+require 'seo/warden'
+require 'warden'
+require 'pry-byebug'
+require_relative 'helpers'
 require_relative '../seo.rb'
 
 module Seo
   class Application < Sinatra::Base
+
+    register Sinatra::Flash
 
     before do
     FileUtils.mkdir_p("./public/reports/") unless File
@@ -14,13 +22,17 @@ module Seo
     # Configuration
     set :public_folder, -> { Seo.root_path.join('public').to_s }
     set :views, -> { Seo.root_path.join('views').to_s }
+    enable :sessions
+    set :session_secret, "holawola"
 
     # Middleware
     #use Rack::CommonLogger
     use Rack::Reloader
+    use Rack::Session::Cookie
 
     get '/' do
       @report_list = Storage.all_reports
+      #@user = Seo::User.get_by_name('test')
       slim :index
     end
 
@@ -30,6 +42,12 @@ module Seo
       Storage.add_report(report)
 
       redirect "/"
+    end
+
+    helpers do
+      def logged_in?
+        env['warden'].authenticated?
+      end
     end
 
     get '/report/:guid' do
@@ -53,6 +71,30 @@ module Seo
 
     error do
       slim :error
+    end
+
+    #WARDEN
+    get '/auth/login' do
+      slim :login
+    end
+
+    post '/auth/login' do
+      env['warden'].authenticate(:password)
+      redirect '/'
+    end
+
+    get '/auth/logout' do
+      env['warden'].raw_session.inspect
+      env['warden'].logout
+      flash[:success] = 'Successfully logged out'
+      redirect '/'
+    end
+
+    post '/auth/unauthenticated' do
+      session[:return_to] = env['warden.options'][:attempted_path]
+      puts env['warden.options'][:attempted_path]
+      flash[:error] = env['warden'].message || "You must log in"
+      redirect '/auth/login'
     end
     
   end

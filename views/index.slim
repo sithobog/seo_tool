@@ -24,5 +24,11 @@
             = report[:created_at]
           .col-xs-4
             a href="/report/#{report[:id]}" View
-  .row
-    a href="/drop_tables" class="btn btn-danger" Delete tables
+  - if !logged_in?
+    .row
+      a href="/auth/login" class="btn btn-info" Sign in
+  - else
+    .row
+      a href="/auth/logout" class="btn btn-success" Log out
+    .row
+      a href="/drop_tables" class="btn btn-danger" Delete tables
