@@ -5,10 +5,8 @@ module Seo
 	class DatabaseStorage < AbstractStorage
 
     def initialize
-      #conn = PG.connect(dbname: 'postgres')
-      #conn.exec("CREATE DATABASE seo_test")
-      conn = PG.connect(host: 'localhost', port: '5432',dbname: 'seo_test', user: 'tester', password: 'test_password')
-      #conn = PG.connect(dbname: 'postgres')
+      check_database('seo_test')
+      #conn = PG.connect(host: 'localhost', port: '5432',dbname: 'seo_test12345', user: 'tester', password: 'test_password')
       create_tables
     end
 
@@ -109,6 +107,13 @@ module Seo
       else
         old_string
       end
+    end
+
+    def check_database(db_name)
+      conn = PG.connect(dbname: 'postgres')
+      #if database exists tuples is equal 1 else tuples is equal 0
+      check = conn.exec("SELECT 1 FROM pg_database WHERE datname = '#{db_name}'").ntuples
+      conn.exec("CREATE DATABASE #{db_name}") if check == 0
     end
 
     def drop_tables
