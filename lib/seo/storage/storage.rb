@@ -3,11 +3,11 @@ require_relative 'postgres_storage'
 require_relative 'sequel_storage'
 
 module Seo
-	class Storage
-	
-		class << self
-	    attr_accessor :storage_type
-	  end
+  class Storage
+  
+    class << self
+      attr_accessor :storage_type
+    end
 
     def self.all_reports
       storage_type.all_reports
@@ -25,5 +25,5 @@ module Seo
       storage_type.drop_tables
     end
 
-	end
+  end
 end

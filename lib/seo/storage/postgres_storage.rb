@@ -3,7 +3,7 @@ require_relative '../configuration.rb'
 require 'pg'
 
 module Seo
-	class PostgresStorage < AbstractStorage
+  class PostgresStorage < AbstractStorage
 
     def initialize
       @db_name = Seo.configuration.db_name
@@ -40,7 +40,7 @@ module Seo
       @client ||= PG::Connection.open(:dbname => @db_name)
     end
 
-		def all_reports()
+    def all_reports()
       report_list = []
       client.exec("SELECT * from reports") do |result|
         result.each do |row|
@@ -51,11 +51,11 @@ module Seo
         end
       end
       report_list
-		end
+    end
 
 
 
-		def add_report(report)
+    def add_report(report)
       _url = report.prepare_site_url(report.site_url)
       report.grab_ip(report.site_url) if report.ip.nil?
       client.exec("INSERT INTO reports(url,created_at,remote_ip) VALUES(
@@ -65,7 +65,7 @@ module Seo
       _report_id = last_record.values.shift[0]
       add_links(report, _report_id)
       add_headers(report,_report_id)
-		end
+    end
 
     def add_links(report,report_id)
       query = ''
@@ -123,7 +123,7 @@ module Seo
       create_tables
     end
 
-		def find_report(guid)
+    def find_report(guid)
       #grab report
       report = []
       client.exec("SELECT * from reports where id=#{guid}") do |result|
@@ -155,7 +155,7 @@ module Seo
         end
       end
       return a = [report, links, headers]
-		end
+    end
 
-	end
+  end
 end
