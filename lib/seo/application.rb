@@ -6,7 +6,6 @@ require 'seo/user'
 require 'seo/warden'
 require 'warden'
 require 'pry-byebug'
-require_relative 'helpers'
 require_relative '../seo.rb'
 
 module Seo
@@ -25,10 +24,10 @@ module Seo
     enable :sessions
     set :session_secret, "holawola"
 
+
     # Middleware
     #use Rack::CommonLogger
     use Rack::Reloader
-    use Rack::Session::Cookie
 
     get '/' do
       @report_list = Storage.all_reports
