@@ -13,10 +13,6 @@ module Seo
 
     register Sinatra::Flash
 
-    before do
-    FileUtils.mkdir_p("./public/reports/") unless File
-      .directory?("./public/reports/")
-    end
 
     # Configuration
     set :public_folder, -> { Seo.root_path.join('public').to_s }
